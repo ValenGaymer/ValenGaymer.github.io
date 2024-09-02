@@ -4,7 +4,6 @@
 format: jb-book
 root: intro
 chapters:
-- file: p1
-- file: p2
-- file: p3
-- file: p4
+- file: notas
+- file: belka
+- file: cell
