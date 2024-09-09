@@ -1,0 +1,1360 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Modelos: NeurIPS 2024 - Predict New Medicines with BELKA &#8212; Primer Parcial Práctico - Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'belkasp';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Open Problems – Single-Cell Perturbations" href="cell.html" />
+    <link rel="prev" title="EDA: NeurIPS 2024 - Predict New Medicines with BELKA" href="belkafp.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Primer Parcial Práctico - Machine Learning</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Ejercicio Notas de Clase (1.0 puntos)
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="ffile.html"><strong>Punto 1</strong></a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="belkafp.html">EDA: NeurIPS 2024 - Predict New Medicines with BELKA</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelos: NeurIPS 2024 - Predict New Medicines with BELKA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cell.html">Open Problems – Single-Cell Perturbations</a></li>
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/belkasp.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Modelos: NeurIPS 2024 - Predict New Medicines with BELKA</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#librerias">Librerías</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos">Modelos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proteina-ephx2-seh">Proteína EPHX2 - sEH</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#knn">KNN</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-logistica">Regresión logística</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cuadro-1-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-seh">Cuadro 1: Modelo de clasificación para predicción de unión entre molécula y proteína sEH.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#matrices-de-confusion">Matrices de confusión</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#curvas-roc">Curvas ROC</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proteina-brd4">Proteína BRD4</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">KNN</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Regresión logística</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cuadro-2-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-brd4">Cuadro 2: Modelo de clasificación para predicción de unión entre molécula y proteína BRD4.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Matrices de confusión</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Curvas ROC</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proteina-alb-hsa">Proteína ALB - HSA</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">KNN</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Regresión logística</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cuadro-3-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-hsa">Cuadro 3: Modelo de clasificación para predicción de unión entre molécula y proteína HSA.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Matrices de confusión</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Curvas ROC</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#justificacion-validacion-cruzada">Justificación validación cruzada</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="modelos-neurips-2024-predict-new-medicines-with-belka">
+<h1>Modelos: NeurIPS 2024 - Predict New Medicines with BELKA<a class="headerlink" href="#modelos-neurips-2024-predict-new-medicines-with-belka" title="Link to this heading">#</a></h1>
+<p>Para la realización de este ejercicio, vamos a trabajar con las bases de datos ajustadas en el Punto 2.1 para el entrenamiento de los modelos de clasificación.</p>
+<section id="librerias">
+<h2>Librerías<a class="headerlink" href="#librerias" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">StratifiedKFold</span><span class="p">,</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="p">(</span><span class="n">precision_score</span><span class="p">,</span>
+    <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">roc_curve</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="modelos">
+<h2>Modelos<a class="headerlink" href="#modelos" title="Link to this heading">#</a></h2>
+<section id="proteina-ephx2-seh">
+<h3>Proteína EPHX2 - sEH<a class="headerlink" href="#proteina-ephx2-seh" title="Link to this heading">#</a></h3>
+<p>Primero importamos la base de datos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataseh</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/Users/valcd/OneDrive/Escritorio/MachinelearningUN/datatrainsEH.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ahora proseguiremos con los modelos.</p>
+<section id="knn">
+<h4>KNN<a class="headerlink" href="#knn" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_seh</span> <span class="o">=</span> <span class="n">dataseh</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;binds&#39;</span><span class="p">)</span> <span class="c1"># Se toman todas las columnas excepto la objetivo</span>
+<span class="n">y_seh</span> <span class="o">=</span> <span class="n">dataseh</span><span class="p">[</span><span class="s1">&#39;binds&#39;</span><span class="p">]</span> <span class="c1"># Se toma solo la columna objetivo</span>
+
+<span class="c1">#Particionamos conjunto entrenamiento pues conjunto test no cuenta con la variable objetivo.</span>
+<span class="n">X_trainseh</span><span class="p">,</span> <span class="n">X_testseh</span><span class="p">,</span> <span class="n">y_trainseh</span><span class="p">,</span> <span class="n">y_testseh</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_seh</span><span class="p">,</span> <span class="n">y_seh</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span> <span class="n">y_seh</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_pipelineseh</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s1">&#39;KNN&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;distance&#39;</span><span class="p">))])</span> <span class="c1">#Creación del Pipeline</span>
+<span class="n">knn_paramgridseh</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;KNN__n_neighbors&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">150</span><span class="p">))}</span> <span class="c1">#Hiperparámetros</span>
+
+<span class="n">skf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">21</span><span class="p">)</span>
+
+<span class="n">knn_gridseh</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">knn_pipelineseh</span><span class="p">,</span> <span class="n">knn_paramgridseh</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">skf</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">)</span>
+<span class="n">knn_gridseh</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_trainseh</span><span class="p">,</span> <span class="n">y_trainseh</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor score de conjunto de entrenamiento :&quot;</span><span class="p">,</span> <span class="n">knn_gridseh</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor parámetro: &quot;</span><span class="p">,</span> <span class="n">knn_gridseh</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+
+<span class="n">ypredknnseh</span> <span class="o">=</span> <span class="n">knn_gridseh</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testseh</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="c1"># Se trabaja con predict_proba porque la métrica es auc</span>
+<span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">ypredknnseh</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mejor score de conjunto de test:&#39;</span><span class="p">,</span> <span class="n">auc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mejor score de conjunto de entrenamiento : 0.9490003439894383
+Mejor parámetro:  {&#39;KNN__n_neighbors&#39;: 148}
+Mejor score de conjunto de test: 0.9310476191727636
+</pre></div>
+</div>
+</div>
+</div>
+<p>Es decir que la cantidad óptima de vecinos sería 148. También vemos que los scores de entrenamiento y test son cercanos y a la vez altos, esto da indicio de una buena predicción.</p>
+</section>
+<section id="regresion-logistica">
+<h4>Regresión logística<a class="headerlink" href="#regresion-logistica" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_seh</span> <span class="o">=</span> <span class="n">dataseh</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;binds&#39;</span><span class="p">)</span>  
+<span class="n">y_seh</span> <span class="o">=</span> <span class="n">dataseh</span><span class="p">[</span><span class="s1">&#39;binds&#39;</span><span class="p">]</span> 
+
+<span class="n">X_trainseh</span><span class="p">,</span> <span class="n">X_testseh</span><span class="p">,</span> <span class="n">y_trainseh</span><span class="p">,</span> <span class="n">y_testseh</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_seh</span><span class="p">,</span> <span class="n">y_seh</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span> <span class="n">y_seh</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr_pipelineseh</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s1">&#39;lr&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())])</span> 
+<span class="n">lr_paramgridseh</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lr__C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]}</span>
+
+<span class="n">lr_gridseh</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">lr_pipelineseh</span><span class="p">,</span> <span class="n">lr_paramgridseh</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">)</span>
+<span class="n">lr_gridseh</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_trainseh</span><span class="p">,</span> <span class="n">y_trainseh</span><span class="p">)</span>
+
+<span class="n">ypredlrseh</span> <span class="o">=</span> <span class="n">lr_gridseh</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testseh</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">ypredlrseh</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor score de conjunto de entrenamiento:&quot;</span><span class="p">,</span> <span class="n">lr_gridseh</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor parámetro: &quot;</span><span class="p">,</span> <span class="n">lr_gridseh</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mejor score de conjunto de test:&#39;</span><span class="p">,</span><span class="n">auc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mejor score de conjunto de entrenamiento: 0.9684674758381405
+Mejor parámetro:  {&#39;lr__C&#39;: 0.01}
+Mejor score de conjunto de test: 0.9421435241639335
+</pre></div>
+</div>
+</div>
+</div>
+<p>En este caso tenemos que el mejor parámetro es 0.01, viendo que los scores de entrenamiento y test son cercanos.</p>
+</section>
+<section id="cuadro-1-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-seh">
+<h4>Cuadro 1: Modelo de clasificación para predicción de unión entre molécula y proteína sEH.<a class="headerlink" href="#cuadro-1-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-seh" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">KNN_seh</span> <span class="o">=</span> <span class="n">knn_gridseh</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_testseh</span><span class="p">)</span>
+<span class="n">LR_seh</span> <span class="o">=</span> <span class="n">lr_gridseh</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_testseh</span><span class="p">)</span>
+
+<span class="n">probknnseh</span> <span class="o">=</span> <span class="n">knn_gridseh</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testseh</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">problrseh</span> <span class="o">=</span> <span class="n">lr_gridseh</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testseh</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">metricas</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Modelo&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;KNN&#39;</span><span class="p">,</span> <span class="s1">&#39;Regresión logística&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">precision_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">KNN_seh</span><span class="p">),</span> <span class="c1"># KNN</span>
+        <span class="n">precision_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">LR_seh</span><span class="p">)</span> <span class="c1"># Regresión logística</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">recall_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">KNN_seh</span><span class="p">),</span>
+        <span class="n">recall_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">LR_seh</span><span class="p">)</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;F1 Score&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">f1_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">KNN_seh</span><span class="p">),</span>
+        <span class="n">f1_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">LR_seh</span><span class="p">)</span>
+    <span class="p">],</span>
+    
+    <span class="s1">&#39;ROC AUC&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">probknnseh</span><span class="p">),</span> 
+        <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">problrseh</span><span class="p">)</span>  
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">cuadro1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metricas</span><span class="p">)</span>
+<span class="n">cuadro1</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1 Score</th>
+      <th>ROC AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>KNN</td>
+      <td>0.560000</td>
+      <td>0.304348</td>
+      <td>0.394366</td>
+      <td>0.931048</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Regresión logística</td>
+      <td>0.672269</td>
+      <td>0.434783</td>
+      <td>0.528053</td>
+      <td>0.942144</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Podemos observar que, en términos generales, las métricas predicen mejor el modelo usando regresión logística debido a que el score de este es el mayor en todas las métricas.</p>
+<p>Además, se puede concluir que esa diferencia entre los scores de las métricas puede estar dado por el desbalanceo propio de la base de datos, y porque AUC se basa en probabilidades mientras que las demás no.</p>
+</section>
+<section id="matrices-de-confusion">
+<h4>Matrices de confusión<a class="headerlink" href="#matrices-de-confusion" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ypredknnseh_cm</span> <span class="o">=</span> <span class="p">(</span><span class="n">ypredknnseh</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="c1"># Pasar predictor a número</span>
+
+<span class="n">knncmseh</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">ypredknnseh_cm</span><span class="p">)</span> <span class="c1"># Matriz de confusión</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">knncmseh</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicción&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de confusión - KNN&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b21e042bb292507c48ea643658e4af807c3ed2c30ab25d9d6fac4d4ade8b6975.png" src="_images/b21e042bb292507c48ea643658e4af807c3ed2c30ab25d9d6fac4d4ade8b6975.png" />
+</div>
+</div>
+<p>Podemos observar que el modelo presenta un alto número de verdaderos negativos, es decir, predijo correctamente que 24772 proteínas no estaban unidas con alguna molécula. Por otra parte, los verdaderos positivos (56) no fueron tan altos cómo se desearía. También se puede notar que las predicciones falsas no fueron tan altas, siendo estas 128 falsos negativos y 44 falsos positivos.</p>
+<p>Cabe mencionar que tanto en los falsos como en los positivos, la mayor predicción la obtuvo la clase negativa por el desbalanceo de la base.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ypredlrseh_cm</span> <span class="o">=</span> <span class="p">(</span><span class="n">ypredlrseh</span>  <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">lrcmseh</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">ypredlrseh_cm</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">lrcmseh</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicción&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de confusión - Regresión Logística&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/276dcf8fea4c02432ff6ab80c12a351c1db22e917f72318d5966765054cd82cd.png" src="_images/276dcf8fea4c02432ff6ab80c12a351c1db22e917f72318d5966765054cd82cd.png" />
+</div>
+</div>
+<p>La matriz de este modelo sigue el mismo patrón de KNN, pues, en este caso la mayor cantidad de predicciones la obtuvo el grupo de verdaderos negativos con 24777. Asímismo, los verdaderos positivos (80) tampoco obtuvieron una cantidad de predicciones significativa. Al igual que las predicciones falsas donde los positivos obtuvieron 39 y los negativos 104. Esto da entender que el modelo predice de manera más efectiva el hecho de que la molécula y la proteína no estén unidas.</p>
+<p>Cabe mencionar que tanto en los falsos como en los positivos, la mayor predicción la obtuvo la clase negativa por el desbalanceo de la base.</p>
+</section>
+<section id="curvas-roc">
+<h4>Curvas ROC<a class="headerlink" href="#curvas-roc" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">ypredknnseh</span><span class="p">)</span>
+<span class="n">knnaucseh</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">ypredknnseh</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span><span class="n">tpr</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Curva ROC KNN (AUC = </span><span class="si">{</span><span class="n">knnaucseh</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39; Tasa Falsos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39; Tasa Verdaderos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Curva ROC - KNN&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0fae081eb2776228c270d82b0a2c64069cd94c6dcfbe4c51b6e63a737fcb7f12.png" src="_images/0fae081eb2776228c270d82b0a2c64069cd94c6dcfbe4c51b6e63a737fcb7f12.png" />
+</div>
+</div>
+<p>Recordemos que el AUC de este modelo es 0.931048, de entrada esto nos habla de que el modelo cuenta con buen rendimiento en términos de sensibilidad y especificidad. Además, gráficamente, observamos que la curva está bastante alejada de la diagonal por lo que podemos afirmar que en las predicciones se encuentra un balance entre los verdaderos positivos y los falsos positivos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">ypredlrseh</span><span class="p">)</span>
+<span class="n">lraucseh</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testseh</span><span class="p">,</span> <span class="n">ypredlrseh</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span><span class="n">tpr</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Curva ROC Regresión Logística (AUC = </span><span class="si">{</span><span class="n">lraucseh</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39; Tasa Falsos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39; Tasa Verdaderos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Curva ROC - Regresión Logística&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e26322b29c2f8a8c6e65a3ffbfadf7f82424d515c591f04ff2042bcb469d3fab.png" src="_images/e26322b29c2f8a8c6e65a3ffbfadf7f82424d515c591f04ff2042bcb469d3fab.png" />
+</div>
+</div>
+<p>Para este modelo nuestro AUC es 0.942144, al igual que KNN cuenta con un buen rendimiento. En este caso también podemos ver que la curva está bastante distante de la diagonal por lo que se puede afirmar que existe un buen balance entre las predicciones de ambos grupos.</p>
+</section>
+</section>
+<section id="proteina-brd4">
+<h3>Proteína BRD4<a class="headerlink" href="#proteina-brd4" title="Link to this heading">#</a></h3>
+<p>Procedemos a importar la base de datos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">databrd4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/Users/valcd/OneDrive/Escritorio/MachinelearningUN/datatrainbrd4.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="id1">
+<h4>KNN<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_brd4</span> <span class="o">=</span> <span class="n">databrd4</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;binds&#39;</span><span class="p">)</span>  
+<span class="n">y_brd4</span> <span class="o">=</span> <span class="n">databrd4</span><span class="p">[</span><span class="s1">&#39;binds&#39;</span><span class="p">]</span> 
+
+<span class="n">X_trainbrd4</span><span class="p">,</span> <span class="n">X_testbrd4</span><span class="p">,</span> <span class="n">y_trainbrd4</span><span class="p">,</span> <span class="n">y_testbrd4</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_brd4</span><span class="p">,</span> <span class="n">y_brd4</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span> <span class="n">y_brd4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_pipelinebrd4</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s1">&#39;KNN&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;distance&#39;</span><span class="p">))])</span> <span class="c1">#Creación del Pipeline</span>
+<span class="n">knn_paramgridbrd4</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;KNN__n_neighbors&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">150</span><span class="p">))}</span> <span class="c1">#Parámetro grid</span>
+
+<span class="n">skf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">21</span><span class="p">)</span>
+
+<span class="n">knn_gridbrd4</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">knn_pipelinebrd4</span><span class="p">,</span> <span class="n">knn_paramgridbrd4</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">skf</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">)</span>
+<span class="n">knn_gridbrd4</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_trainbrd4</span><span class="p">,</span> <span class="n">y_trainbrd4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor score de conjunto de entrenamiento :&quot;</span><span class="p">,</span> <span class="n">knn_gridbrd4</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor parámetro: &quot;</span><span class="p">,</span> <span class="n">knn_gridbrd4</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+
+<span class="n">ypredknnbrd4</span> <span class="o">=</span> <span class="n">knn_gridbrd4</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testbrd4</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">ypredknnbrd4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mejor score de conjunto de test:&#39;</span><span class="p">,</span> <span class="n">auc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mejor score de conjunto de entrenamiento : 0.8899296562577117
+Mejor parámetro:  {&#39;KNN__n_neighbors&#39;: 148}
+Mejor score de conjunto de test: 0.8225783151062309
+</pre></div>
+</div>
+</div>
+</div>
+<p>Nuevamente la cantidad óptima de vecinos es 148 y los scores de entrenamiento y test son cercanos y altos, por lo que se puede pensar que es una buena predicción.</p>
+</section>
+<section id="id2">
+<h4>Regresión logística<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_brd4</span> <span class="o">=</span> <span class="n">databrd4</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;binds&#39;</span><span class="p">)</span>  
+<span class="n">y_brd4</span> <span class="o">=</span> <span class="n">databrd4</span><span class="p">[</span><span class="s1">&#39;binds&#39;</span><span class="p">]</span> 
+
+<span class="n">X_trainbrd4</span><span class="p">,</span> <span class="n">X_testbrd4</span><span class="p">,</span> <span class="n">y_trainbrd4</span><span class="p">,</span> <span class="n">y_testbrd4</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_brd4</span><span class="p">,</span> <span class="n">y_brd4</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span> <span class="n">y_brd4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr_pipelinebrd4</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s1">&#39;lr&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())])</span> 
+<span class="n">lr_paramgridbrd4</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lr__C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]}</span>
+
+<span class="n">lr_gridbrd4</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">lr_pipelinebrd4</span><span class="p">,</span> <span class="n">lr_paramgridbrd4</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">)</span>
+<span class="n">lr_gridbrd4</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_trainbrd4</span><span class="p">,</span> <span class="n">y_trainbrd4</span><span class="p">)</span>
+
+<span class="n">ypredlrbrd4</span> <span class="o">=</span> <span class="n">lr_gridbrd4</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testbrd4</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">ypredlrbrd4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor score de conjunto de entrenamiento:&quot;</span><span class="p">,</span><span class="n">lr_gridbrd4</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor parámetro: &quot;</span><span class="p">,</span> <span class="n">lr_gridbrd4</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mejor score de conjunto de test:&#39;</span><span class="p">,</span><span class="n">auc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mejor score de conjunto de entrenamiento: 0.9348379462242326
+Mejor parámetro:  {&#39;lr__C&#39;: 0.01}
+Mejor score de conjunto de test: 0.9431157120764485
+</pre></div>
+</div>
+</div>
+</div>
+<p>Aquí observamos que el modelo se entrenó bastante bien pues el score del test es mayor al de entrenamiento. Por otro lado, nuevamente el mejor parámetro resultó ser 0.01.</p>
+</section>
+<section id="cuadro-2-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-brd4">
+<h4>Cuadro 2: Modelo de clasificación para predicción de unión entre molécula y proteína BRD4.<a class="headerlink" href="#cuadro-2-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-brd4" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">KNN_brd4</span> <span class="o">=</span> <span class="n">knn_gridbrd4</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_testbrd4</span><span class="p">)</span>
+<span class="n">LR_brd4</span> <span class="o">=</span> <span class="n">lr_gridbrd4</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_testbrd4</span><span class="p">)</span>
+
+<span class="n">probknnbrd4</span> <span class="o">=</span> <span class="n">knn_gridbrd4</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testbrd4</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">problrbrd4</span> <span class="o">=</span> <span class="n">lr_gridbrd4</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testbrd4</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">metricas</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Modelo&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;KNN&#39;</span><span class="p">,</span> <span class="s1">&#39;Regresión logística&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">precision_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">KNN_brd4</span><span class="p">),</span> <span class="c1"># K-NN</span>
+        <span class="n">precision_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">LR_brd4</span><span class="p">)</span> <span class="c1"># Regresión logística</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">recall_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">KNN_brd4</span><span class="p">),</span>
+        <span class="n">recall_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">LR_brd4</span><span class="p">)</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;F1 Score&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">f1_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">KNN_brd4</span><span class="p">),</span>
+        <span class="n">f1_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">LR_brd4</span><span class="p">)</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;ROC AUC&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">probknnbrd4</span><span class="p">),</span> 
+        <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">problrbrd4</span><span class="p">)</span>  
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">cuadro2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metricas</span><span class="p">)</span>
+<span class="n">cuadro2</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1 Score</th>
+      <th>ROC AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>KNN</td>
+      <td>0.344828</td>
+      <td>0.086207</td>
+      <td>0.137931</td>
+      <td>0.822578</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Regresión logística</td>
+      <td>0.468750</td>
+      <td>0.129310</td>
+      <td>0.202703</td>
+      <td>0.943116</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Podemos darnos cuenta de que el modelo de regresión logística es mejor prediciendo que el de KNN dado que los scores de todas sus métricas son mayores comparadas con el segundo grupo mencionado.</p>
+</section>
+<section id="id3">
+<h4>Matrices de confusión<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ypredknnbrd4_cm</span> <span class="o">=</span> <span class="p">(</span><span class="n">ypredknnbrd4</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">knncmbrd4</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">ypredknnbrd4_cm</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">knncmbrd4</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicción&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de confusión - KNN&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ac9e28b40afe3388f01f83a113b044e3bfdc385754186301e314ed8f619fee99.png" src="_images/ac9e28b40afe3388f01f83a113b044e3bfdc385754186301e314ed8f619fee99.png" />
+</div>
+</div>
+<p>La mayor cantidad de predicciones realizadas fue 24865 al grupo de verdaderos negativos lo que quiere decir que está bien entrenado en ese aspecto. Por otra parte, los verdaderos positivos fueron muy pocos (10), algo no tan desebale en este contexto. También se puede notar que las predicciones falsas no fueron tan altas, siendo estas 109 falsos negativos y 19 falsos positivos, lo cual afecta la intención de los fármacos.</p>
+<p>Cabe mencionar que tanto en los falsos como en los positivos, la mayor predicción la obtuvo la clase negativa por el desbalanceo de la base.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ypredlrbrd4_cm</span>  <span class="o">=</span> <span class="p">(</span><span class="n">ypredlrbrd4</span>  <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">lrcmbrd4</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">ypredlrbrd4_cm</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">lrcmbrd4</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicción&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de confusión - Regresión Logística&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4b15a91f2fee428e82378ab713995b1bf8406872a87faebf9f221f5017c5104c.png" src="_images/4b15a91f2fee428e82378ab713995b1bf8406872a87faebf9f221f5017c5104c.png" />
+</div>
+</div>
+<p>La cantidad de predicciones de verdaderos negativos fue bastante cercana a la del modelo KNN, con una diferencia de 2. Observamos que se sigue presentando el patrón de obtener pocas predicciones en los demás grupos, sobretodo en aquellos relacionados con los positivos (tanto verdaderos como falsos).</p>
+</section>
+<section id="id4">
+<h4>Curvas ROC<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">ypredknnbrd4</span><span class="p">)</span>
+<span class="n">knnaucbrd4</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">ypredknnbrd4</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span><span class="n">tpr</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Curva ROC KNN (AUC = </span><span class="si">{</span><span class="n">knnaucbrd4</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39; Tasa Falsos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39; Tasa Verdaderos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Curva ROC - KNN&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/47732f7e4c36d38dded48c3f78e4bf7257c4bb9fcfab4ad1d4a2fb50b2411aff.png" src="_images/47732f7e4c36d38dded48c3f78e4bf7257c4bb9fcfab4ad1d4a2fb50b2411aff.png" />
+</div>
+</div>
+<p>Gráficamente observamos que la curva está un poco más cercana a la diagonal comparada con las demás observaciones, esto quiere decir que el modelo predice bien pero no tanto como los anteriores. Esto se reafirma con su AUC de 0.822578 que implica que tiene un rendimiento más aceptable que bueno.</p>
+<p>Vemos que no hay un balance entre ambas tasas/proporciones,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">ypredlrbrd4</span><span class="p">)</span>
+<span class="n">lraucbrd4</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testbrd4</span><span class="p">,</span> <span class="n">ypredlrbrd4</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span><span class="n">tpr</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Curva ROC KNN (AUC = </span><span class="si">{</span><span class="n">lraucbrd4</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39; Tasa Falsos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39; Tasa Verdaderos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Curva ROC - Regresión Logística&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1011748bd57e111c47d6dbbf757821d1cf67446aa2b1f3dc5e90b1e03feb50e8.png" src="_images/1011748bd57e111c47d6dbbf757821d1cf67446aa2b1f3dc5e90b1e03feb50e8.png" />
+</div>
+</div>
+<p>Esta gráfica presenta una curva bastante alejada de la diagonal, insinuando así que el modelo tiene un alto poder predictivo. Esto puede confirmarse con el score del conjunto de prueba obtenido: 0.943116, lo cual implica que se presentó un buen rendimiento.</p>
+</section>
+</section>
+<section id="proteina-alb-hsa">
+<h3>Proteína ALB - HSA<a class="headerlink" href="#proteina-alb-hsa" title="Link to this heading">#</a></h3>
+<p>Primero se importa la base de datos de interés.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datahsa</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/Users/valcd/OneDrive/Escritorio/MachinelearningUN/datatrainhsa.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ahora los modelos.</p>
+<section id="id5">
+<h4>KNN<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_hsa</span> <span class="o">=</span> <span class="n">datahsa</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;binds&#39;</span><span class="p">)</span>  
+<span class="n">y_hsa</span> <span class="o">=</span> <span class="n">datahsa</span><span class="p">[</span><span class="s1">&#39;binds&#39;</span><span class="p">]</span> 
+
+<span class="n">X_trainhsa</span><span class="p">,</span> <span class="n">X_testhsa</span><span class="p">,</span> <span class="n">y_trainhsa</span><span class="p">,</span> <span class="n">y_testhsa</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_hsa</span><span class="p">,</span> <span class="n">y_hsa</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span> <span class="n">y_hsa</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_pipelinehsa</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s1">&#39;KNN&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;distance&#39;</span><span class="p">))])</span> <span class="c1">#Creación del Pipeline</span>
+<span class="n">knn_paramgridhsa</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;KNN__n_neighbors&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">150</span><span class="p">))}</span> <span class="c1">#Parámetro grid</span>
+
+<span class="n">skf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">21</span><span class="p">)</span>
+
+<span class="n">knn_gridhsa</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">knn_pipelinehsa</span><span class="p">,</span> <span class="n">knn_paramgridhsa</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">skf</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">)</span>
+<span class="n">knn_gridhsa</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_trainhsa</span><span class="p">,</span> <span class="n">y_trainhsa</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor score de conjunto de entrenamiento :&quot;</span><span class="p">,</span> <span class="n">knn_gridhsa</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor parámetro: &quot;</span><span class="p">,</span> <span class="n">knn_gridhsa</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+
+<span class="n">ypredknnhsa</span> <span class="o">=</span> <span class="n">knn_gridhsa</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testhsa</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">ypredknnhsa</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mejor score de conjunto de test:&#39;</span><span class="p">,</span> <span class="n">auc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mejor score de conjunto de entrenamiento : 0.8097874660582345
+Mejor parámetro:  {&#39;KNN__n_neighbors&#39;: 147}
+Mejor score de conjunto de test: 0.8120102704172435
+</pre></div>
+</div>
+</div>
+</div>
+<p>Se puede decir que el modelo estuvo bien entrenado pues el score del test es superior al de entrenamiento. Por otra parte, cabe mencionar que la cantidad óptima de vecinos es 147.</p>
+</section>
+<section id="id6">
+<h4>Regresión logística<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_hsa</span> <span class="o">=</span> <span class="n">datahsa</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;binds&#39;</span><span class="p">)</span>  
+<span class="n">y_hsa</span> <span class="o">=</span> <span class="n">datahsa</span><span class="p">[</span><span class="s1">&#39;binds&#39;</span><span class="p">]</span> 
+
+<span class="n">X_trainhsa</span><span class="p">,</span> <span class="n">X_testhsa</span><span class="p">,</span> <span class="n">y_trainhsa</span><span class="p">,</span> <span class="n">y_testhsa</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_hsa</span><span class="p">,</span> <span class="n">y_hsa</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span> <span class="n">y_hsa</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr_pipelinehsa</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s1">&#39;lr&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())])</span> 
+<span class="n">lr_paramgridhsa</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lr__C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]}</span>
+
+<span class="n">lr_gridhsa</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">lr_pipelinehsa</span><span class="p">,</span> <span class="n">lr_paramgridhsa</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;roc_auc&#39;</span><span class="p">)</span>
+<span class="n">lr_gridhsa</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_trainhsa</span><span class="p">,</span> <span class="n">y_trainhsa</span><span class="p">)</span>
+
+<span class="n">ypredlrhsa</span> <span class="o">=</span> <span class="n">lr_gridhsa</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testhsa</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">ypredlrhsa</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor score de conjunto de entrenamiento:&quot;</span><span class="p">,</span><span class="n">lr_gridhsa</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mejor parámetro: &quot;</span><span class="p">,</span> <span class="n">lr_gridhsa</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mejor score de conjunto de test:&#39;</span><span class="p">,</span><span class="n">auc</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mejor score de conjunto de entrenamiento: 0.889083999520874
+Mejor parámetro:  {&#39;lr__C&#39;: 0.01}
+Mejor score de conjunto de test: 0.8741580358908444
+</pre></div>
+</div>
+</div>
+</div>
+<p>En este caso tenemos que el mejor parámetro es 0.01, viendo que los scores de entrenamiento y test son cercanos.</p>
+</section>
+<section id="cuadro-3-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-hsa">
+<h4>Cuadro 3: Modelo de clasificación para predicción de unión entre molécula y proteína HSA.<a class="headerlink" href="#cuadro-3-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-hsa" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">KNN_hsa</span> <span class="o">=</span> <span class="n">knn_gridhsa</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_testhsa</span><span class="p">)</span>
+<span class="n">LR_hsa</span> <span class="o">=</span> <span class="n">lr_gridhsa</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_testhsa</span><span class="p">)</span>
+
+<span class="n">probknnhsa</span> <span class="o">=</span> <span class="n">knn_gridhsa</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testhsa</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">problrhsa</span> <span class="o">=</span> <span class="n">lr_gridhsa</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_testhsa</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">metricas</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Modelo&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;KNN&#39;</span><span class="p">,</span> <span class="s1">&#39;Regresión logística&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Precision&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">precision_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">KNN_hsa</span><span class="p">),</span> <span class="c1"># K-NN</span>
+        <span class="n">precision_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">LR_hsa</span><span class="p">)</span> <span class="c1"># Regresión logística</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;Recall&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">recall_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">KNN_hsa</span><span class="p">),</span>
+        <span class="n">recall_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">LR_hsa</span><span class="p">)</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;F1 Score&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">f1_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">KNN_hsa</span><span class="p">),</span>
+        <span class="n">f1_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">LR_hsa</span><span class="p">)</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;ROC AUC&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">probknnhsa</span><span class="p">),</span> 
+        <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">problrhsa</span><span class="p">)</span>  
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">cuadro3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metricas</span><span class="p">)</span>
+<span class="n">cuadro3</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1 Score</th>
+      <th>ROC AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>KNN</td>
+      <td>0.312500</td>
+      <td>0.048077</td>
+      <td>0.083333</td>
+      <td>0.812010</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Regresión logística</td>
+      <td>0.416667</td>
+      <td>0.048077</td>
+      <td>0.086207</td>
+      <td>0.874158</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Al igual que como se venía observando, se puede decir que el modelo de regresión logística se entrenó mejor dado que sus scores son mayores en todas las métricas.</p>
+</section>
+<section id="id7">
+<h4>Matrices de confusión<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ypredknnhsa_cm</span> <span class="o">=</span> <span class="p">(</span><span class="n">ypredknnhsa</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">knncmhsa</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">ypredknnhsa_cm</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">knncmhsa</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicción&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de confusión - KNN&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/308f906ea03910124b9e1d60fea86884dbb5c4ff9123fa17dffa2e3fbfea978a.png" src="_images/308f906ea03910124b9e1d60fea86884dbb5c4ff9123fa17dffa2e3fbfea978a.png" />
+</div>
+</div>
+<p>Dado el gran desbalance en la base de datos, observamos que en una nueva ocasión los verdaderos negativos son las que más predicciones obtuvieron. Hay solamente 5 verdaderos positivos, y entre el grupo de los falsos, los negativos obtuvieron más predicciones que los verdaderos.</p>
+<p>Es decir, este modelo predice más a los negativos pues el porcentaje de 0 en la base es de más del 95%.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ypredlrhsa_cm</span>  <span class="o">=</span> <span class="p">(</span><span class="n">ypredlrhsa</span>  <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="n">lrcmhsa</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">ypredlrhsa_cm</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">lrcmbrd4</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicción&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de confusión - Regresión Logística&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/4b15a91f2fee428e82378ab713995b1bf8406872a87faebf9f221f5017c5104c.png" src="_images/4b15a91f2fee428e82378ab713995b1bf8406872a87faebf9f221f5017c5104c.png" />
+</div>
+</div>
+<p>Cuenta con un alto número de verdaderos negativos, 24867,pero los verdaderos positivos son muy pocos, 15. En cuanto a las predicciones falsas, ambas cantidades son bastantes pequeñas también, sin embargo, la de los negativos (101) es mayor a la de los positivos (17).</p>
+</section>
+<section id="id8">
+<h4>Curvas ROC<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">ypredknnhsa</span><span class="p">)</span>
+<span class="n">knnauchsa</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">ypredknnhsa</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span><span class="n">tpr</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Curva ROC KNN (AUC = </span><span class="si">{</span><span class="n">knnauchsa</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39; Tasa Falsos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39; Tasa Verdaderos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Curva ROC - KNN&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3859c4664e2487731a4217510cbeab984521b3538a6532c2d3a9ae3d71eee282.png" src="_images/3859c4664e2487731a4217510cbeab984521b3538a6532c2d3a9ae3d71eee282.png" />
+</div>
+</div>
+<p>En este caso observamos una curva relativamente alejada de la diagonal, esto nos indica que puede llegar a ser un buen predictor, sin embargo, su AUC es de 0.812010 y la curva no pasa cercana a (0,1), lo cual implica que el modelo tiene la capacidad de clasificar correctamente en la mayoría de los casos pero puede mejorar su rendimiento.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">ypredlrhsa</span><span class="p">)</span>
+<span class="n">lrauchsa</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_testhsa</span><span class="p">,</span> <span class="n">ypredlrhsa</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span><span class="n">tpr</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Curva ROC KNN (AUC = </span><span class="si">{</span><span class="n">lrauchsa</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39; Tasa Falsos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39; Tasa Verdaderos Positivos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Curva ROC - Regresión Logística&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/53e414cee0d1fce2f67a5e5b0ee8a1a34002e91fad7982197872494e6a31d82e.png" src="_images/53e414cee0d1fce2f67a5e5b0ee8a1a34002e91fad7982197872494e6a31d82e.png" />
+</div>
+</div>
+<p>Para este modelo vemos una curva mejor, está un poco más cercana al (0,1) por lo que podemos suponer que la tasa de verdaderos positivos es relativamente mayor a la de verdaderos positivos. Además, tiene un AUC mayor al de KNN igual a 0.874158</p>
+</section>
+</section>
+<section id="justificacion-validacion-cruzada">
+<h3>Justificación validación cruzada<a class="headerlink" href="#justificacion-validacion-cruzada" title="Link to this heading">#</a></h3>
+<p>Como se pudo observar, en el desarrollo de este ejercicio se hizo uso de StratifiedKFold para la validación cruzada. Se optó por esta técnica dado que nuestras bases de datos cuentan con un gran desbalance, en donde prácticamente todas las observaciones pertenecen a la clase 0 en la variable binaria objetivo. Por esta razón es que decidimos escoger esta dado que lo ideal es que la proporcion de estas clases sea la misma en ambos conjuntos para que se hiciera un buen modelo predictivo sin sobreajuste al tener una distribución representativa de 0 y 1.</p>
+</section>
+<section id="conclusiones">
+<h3>Conclusiones<a class="headerlink" href="#conclusiones" title="Link to this heading">#</a></h3>
+<p>Luego de haber analizado las 3 proteínas, pudimos observar que en general el mejor modelo de predicción fue regresión logística pues en todas las ocasiones era la que contaba con mejor score en el test de prueba comparado con KNN.</p>
+<p>Asímismo, observamos una tendencia marcada con ayuda de las matrices de confusión relacionada con el gran desbalance de la distribución de la variable <code class="docutils literal notranslate"><span class="pre">binds</span></code>. Esto se reflejó por medio de la gran cantidad de predicciones de verdaderos negativos y porque la cantidad de falsos negativos también era superior a los positivos en todos los casos.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="belkafp.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">EDA: NeurIPS 2024 - Predict New Medicines with BELKA</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="cell.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Open Problems – Single-Cell Perturbations</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#librerias">Librerías</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos">Modelos</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proteina-ephx2-seh">Proteína EPHX2 - sEH</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#knn">KNN</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-logistica">Regresión logística</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cuadro-1-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-seh">Cuadro 1: Modelo de clasificación para predicción de unión entre molécula y proteína sEH.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#matrices-de-confusion">Matrices de confusión</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#curvas-roc">Curvas ROC</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proteina-brd4">Proteína BRD4</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">KNN</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Regresión logística</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cuadro-2-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-brd4">Cuadro 2: Modelo de clasificación para predicción de unión entre molécula y proteína BRD4.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Matrices de confusión</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Curvas ROC</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proteina-alb-hsa">Proteína ALB - HSA</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">KNN</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Regresión logística</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cuadro-3-modelo-de-clasificacion-para-prediccion-de-union-entre-molecula-y-proteina-hsa">Cuadro 3: Modelo de clasificación para predicción de unión entre molécula y proteína HSA.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Matrices de confusión</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Curvas ROC</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#justificacion-validacion-cruzada">Justificación validación cruzada</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Valentina Cabrera, Valentina Bustamante
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
